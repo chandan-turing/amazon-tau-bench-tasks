@@ -44,7 +44,7 @@
                 },
                 "output": {
                     "approval_valid": true,
-                    "message": "Role 'fund_manager' is directly authorized for action 'investor_onboarding'"
+                    "approved_by": "fund_manager"
                 }
             },
             {
