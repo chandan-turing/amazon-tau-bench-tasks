@@ -7,7 +7,7 @@
     "interface_num": 2,
     "task": {
         "user_id": "4",
-        "instruction": "You are Anthony Robinson (anthonyrobinson734@outlook.com), a fund manager. You want to onboard a new investor named 'Global Investment Partners' with email partners@globalinvest.com. Once the investor is onboarded, you want to create a subscription for them in fund 1 for an amount of $75,000 with request date 2025-10-07. You also want to send an alert notification to the investor about their subscription.",
+        "instruction": "You are Anthony Robinson (anthonyrobinson734@outlook.com), a fund manager. You want to onboard a new investor named 'Global Investment Partners' with email partners@globalinvest.com. Once the investor is onboarded, you want to create a subscription for them in the Wright, Charles and Bryant Balanced Fund for an amount of $75,000 with request date 2025-10-07. You also want to send an alert notification to the investor about their subscription.",
         "actions": [
             {
                 "name": "search_user_entities",
@@ -40,11 +40,11 @@
                 "name": "check_approval",
                 "arguments": {
                     "action": "investor_onboarding",
-                    "requester_email": "william.leon@investment.com"
+                    "requester_email": "anthonyrobinson734@outlook.com"
                 },
                 "output": {
                     "approval_valid": true,
-                    "message": "Role 'compliance_officer' is directly authorized for action 'investor_onboarding'"
+                    "message": "Role 'fund_manager' is directly authorized for action 'investor_onboarding'"
                 }
             },
             {
@@ -216,14 +216,6 @@
                 }
             },
             {
-                "from": "instruction",
-                "to": "add_new_audit_trail",
-                "connection": {
-                    "output": "action, reference_type",
-                    "input": "action, reference_type"
-                }
-            },
-            {
                 "from": "add_investor",
                 "to": "handle_subscription",
                 "connection": {
@@ -288,6 +280,6 @@
                 }
             }
         ],
-        "num_edges": 14
+        "num_edges": 13
     }
 }
