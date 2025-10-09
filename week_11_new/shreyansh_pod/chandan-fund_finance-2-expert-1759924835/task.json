@@ -7,7 +7,7 @@
     "interface_num": 2,
     "task": {
         "user_id": "12",
-        "instruction": "You are Kelly Fuller (email: kfuller@outlook.com), a fund manager. You want to process a payment for invoice ID 1 (amount 45435.35 USD) via bank transfer on 2025-10-01, and mark the invoice as paid.",
+        "instruction": "You are Kelly Fuller (email: kfuller@outlook.com), a fund manager. You want to process a payment for the invoice issued on 2025-08-05 (amount 45435.35 USD) via bank transfer on 2025-10-01, and mark the invoice as paid.",
         "actions": [
             {
                 "name": "search_user_entities",
