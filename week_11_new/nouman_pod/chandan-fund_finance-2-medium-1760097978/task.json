@@ -1,0 +1,245 @@
+{
+    "env": "fund_finance",
+    "model_provider": "fireworks",
+    "model": "qwen3-coder-480b-a35b-instruct",
+    "num_trials": 3,
+    "temperature": 1,
+    "interface_num": 2,
+    "task": {
+        "user_id": "8",
+        "instruction": "You are Matthew Moore (email: matthew.moore@investment.com), a Finance Officer. You want to record the updated net asset value for the fund 'Green-Wright Growth Fund' as of August 15, 2025, which has grown by 8.5% compared to its value on July 26, 2025.",
+        "actions": [
+            {
+                "name": "search_user_entities",
+                "arguments": {
+                    "entity_type": "users",
+                    "filters": {
+                        "email": "matthew.moore@investment.com"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "users",
+                    "results": [
+                        {
+                            "created_at": "2024-01-22T00:23:49",
+                            "email": "matthew.moore@investment.com",
+                            "first_name": "Matthew",
+                            "last_name": "Moore",
+                            "role": "finance_officer",
+                            "status": "active",
+                            "timezone": "UTC",
+                            "updated_at": "2024-04-10T09:44:04",
+                            "user_id": "8"
+                        }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "search_fund_entities",
+                "arguments": {
+                    "entity_type": "funds",
+                    "filters": {
+                        "name": "Green-Wright Growth Fund"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "funds",
+                    "results": [
+                        {
+                            "created_at": "2023-04-21T09:04:46",
+                            "fund_id": "4",
+                            "fund_type": "mutual_funds",
+                            "manager_id": "43",
+                            "name": "Green-Wright Growth Fund",
+                            "size": 111576603.84,
+                            "status": "open",
+                            "updated_at": "2025-04-27T18:13:30"
+                        }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "search_valuation_entities",
+                "arguments": {
+                    "entity_type": "nav_records",
+                    "filters": {
+                        "fund_id": "4",
+                        "nav_date": "2025-07-26"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "nav_records",
+                    "results": [
+                        {
+                            "fund_id": "4",
+                            "nav_date": "2025-07-26",
+                            "nav_id": "35",
+                            "nav_value": 342.2408,
+                            "updated_at": "2025-08-07T21:15:13"
+                        }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "check_approval",
+                "arguments": {
+                    "action": "nav_record_creation",
+                    "requester_email": "matthew.moore@investment.com"
+                },
+                "output": {
+                    "approval_valid": true,
+                    "message": "Role 'finance_officer' is directly authorized for action 'nav_record_creation'"
+                }
+            },
+            {
+                "name": "handle_nav_record",
+                "arguments": {
+                    "action": "create",
+                    "nav_data": {
+                        "fund_id": 4,
+                        "nav_date": "2025-08-15",
+                        "nav_value": 371.33107,
+                        "finance_officer_approval": true
+                    }
+                },
+                "output": {
+                    "action": "create",
+                    "message": "NAV record 1286 created successfully for fund 4 on 2025-08-15",
+                    "nav_data": {
+                        "fund_id": "4",
+                        "nav_date": "2025-08-15",
+                        "nav_id": "1286",
+                        "nav_value": 371.33107,
+                        "updated_at": "2025-10-01T12:00:00"
+                    },
+                    "nav_id": "1286",
+                    "success": true
+                }
+            },
+            {
+                "name": "add_new_audit_trail",
+                "arguments": {
+                    "action": "create",
+                    "reference_id": "1286",
+                    "reference_type": "nav"
+                },
+                "output": {
+                    "action": "create",
+                    "audit_trail_id": "3501",
+                    "created_at": "2025-10-01T00:00:00",
+                    "field_name": null,
+                    "new_value": null,
+                    "old_value": null,
+                    "reference_id": "1286",
+                    "reference_type": "nav"
+                }
+            }
+        ],
+        "output": ["8", "4", "35", "1286", "3501"],
+        "edges": [
+            {
+                "from": "instruction",
+                "to": "search_user_entities",
+                "connection": {
+                    "output": "entity_type, email",
+                    "input": "entity_type, filters.email"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "search_fund_entities",
+                "connection": {
+                    "output": "entity_type, fund_name",
+                    "input": "entity_type, filters.name"
+                }
+            },
+            {
+                "from": "search_fund_entities",
+                "to": "search_valuation_entities",
+                "connection": {
+                    "output": "results[0].fund_id",
+                    "input": "filters.fund_id"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "search_valuation_entities",
+                "connection": {
+                    "output": "entity_type, previous_date",
+                    "input": "entity_type, filters.nav_date"
+                }
+            },
+            {
+                "from": "search_user_entities",
+                "to": "check_approval",
+                "connection": {
+                    "output": "results[0].email",
+                    "input": "requester_email"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "check_approval",
+                "connection": {
+                    "output": "action",
+                    "input": "action"
+                }
+            },
+            {
+                "from": "search_fund_entities",
+                "to": "handle_nav_record",
+                "connection": {
+                    "output": "results[0].fund_id",
+                    "input": "nav_data.fund_id"
+                }
+            },
+            {
+                "from": "check_approval",
+                "to": "handle_nav_record",
+                "connection": {
+                    "output": "approval_valid",
+                    "input": "nav_data.finance_officer_approval"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "handle_nav_record",
+                "connection": {
+                    "output": "action, new_nav_date",
+                    "input": "action, nav_data.nav_date"
+                }
+            },
+            {
+                "from": "search_valuation_entities",
+                "to": "handle_nav_record",
+                "connection": {
+                    "output": "results[0].nav_value",
+                    "input": "nav_data.nav_value"
+                }
+            },
+            {
+                "from": "handle_nav_record",
+                "to": "add_new_audit_trail",
+                "connection": {
+                    "output": "nav_id",
+                    "input": "reference_id"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "add_new_audit_trail",
+                "connection": {
+                    "output": "action, reference_type",
+                    "input": "action, reference_type"
+                }
+            }
+        ],
+        "num_edges": 12
+    }
+}
