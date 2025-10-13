@@ -7,7 +7,7 @@
     "interface_num": 2,
     "task": {
         "user_id": "8",
-        "instruction": "You are Matthew Moore (email: matthew.moore@investment.com), a Finance Officer. You want to record the updated net asset value for the fund 'Green-Wright Growth Fund' as of August 15, 2025, which has grown by 8.5% compared to its value on July 26, 2025.",
+        "instruction": "You are Matthew Moore (email: matthew.moore@investment.com), a Finance Officer. You want to create a new NAV record for the fund 'Green-Wright Growth Fund' as of August 15, 2025, showing an 8.5% increase compared to its value on July 26, 2025.",
         "actions": [
             {
                 "name": "search_user_entities",
