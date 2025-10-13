@@ -1,0 +1,326 @@
+{
+    "env": "fund_finance",
+    "model_provider": "fireworks",
+    "model": "qwen3-coder-480b-a35b-instruct",
+    "num_trials": 3,
+    "temperature": 1,
+    "interface_num": 2,
+    "task": {
+        "user_id": "12",
+        "instruction": "You are Jennifer White (email: jennifer.white@compliance.com), a Compliance Officer. You want to process a redemption request for investor 'Little-Stevens' (littlestevens2160@gmail.com) who wants to redeem 50,000 units from the fund 'Green-Wright Growth Fund' as of September 20, 2025, with a redemption fee of 2.5% based on the latest NAV value from August 15, 2025.",
+        "actions": [
+            {
+                "name": "search_user_entities",
+                "arguments": {
+                    "entity_type": "users",
+                    "filters": {
+                        "email": "jennifer.white@compliance.com"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "users",
+                    "results": [
+                        {
+                            "created_at": "2023-11-15T08:22:11",
+                            "email": "jennifer.white@compliance.com",
+                            "first_name": "Jennifer",
+                            "last_name": "White",
+                            "role": "compliance_officer",
+                            "status": "active",
+                            "timezone": "UTC",
+                            "updated_at": "2024-06-20T14:33:27",
+                            "user_id": "12"
+                        }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "search_investor_entities",
+                "arguments": {
+                    "entity_type": "investors",
+                    "filters": {
+                        "contact_email": "littlestevens2160@gmail.com"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "investors",
+                    "results": [
+                        {
+                            "accreditation_status": "accredited",
+                            "address": "821 Landry Radial Suite 647, Jamesfurt, PR 63836",
+                            "contact_email": "littlestevens2160@gmail.com",
+                            "country": "United Kingdom",
+                            "created_at": "2025-06-17T07:35:12",
+                            "date_of_incorporation": "2022-12-31",
+                            "investor_id": "2",
+                            "name": "Little-Stevens",
+                            "registration_number": 10190412,
+                            "source_of_funds": "shareholder_capital",
+                            "status": "onboarded",
+                            "tax_id": "936-95-9440"
+                        }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "search_fund_entities",
+                "arguments": {
+                    "entity_type": "funds",
+                    "filters": {
+                        "name": "Green-Wright Growth Fund"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "funds",
+                    "results": [
+                        {
+                            "created_at": "2023-04-21T09:04:46",
+                            "fund_id": "4",
+                            "fund_type": "mutual_funds",
+                            "manager_id": "43",
+                            "name": "Green-Wright Growth Fund",
+                            "size": 111576603.84,
+                            "status": "open",
+                            "updated_at": "2025-04-27T18:13:30"
+                        }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "search_portfolio_entities",
+                "arguments": {
+                    "entity_type": "portfolio_holdings",
+                    "filters": {
+                        "investor_id": "2",
+                        "fund_id": "4"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "portfolio_holdings",
+                    "results": [
+                        {
+                            "cost_basis": 300.50,
+                            "created_at": "2025-03-10T10:15:22",
+                            "fund_id": "4",
+                            "holding_id": "87",
+                            "portfolio_id": "25",
+                            "quantity": 75000,
+                            "status": "active",
+                            "updated_at": "2025-08-01T09:30:15"
+                        }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "search_valuation_entities",
+                "arguments": {
+                    "entity_type": "nav_records",
+                    "filters": {
+                        "fund_id": "4",
+                        "nav_date": "2025-08-15"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "nav_records",
+                    "results": [
+                        {
+                            "fund_id": "4",
+                            "nav_date": "2025-08-15",
+                            "nav_id": "1286",
+                            "nav_value": 371.155668,
+                            "updated_at": "2025-08-16T12:00:00"
+                        }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "check_approval",
+                "arguments": {
+                    "action": "redemption_processing",
+                    "requester_email": "jennifer.white@compliance.com"
+                },
+                "output": {
+                    "approval_valid": true,
+                    "message": "Role 'compliance_officer' is authorized for action 'redemption_processing'"
+                }
+            },
+            {
+                "name": "handle_redemption",
+                "arguments": {
+                    "action": "create",
+                    "redemption_data": {
+                        "investor_id": 2,
+                        "fund_id": 4,
+                        "amount_or_units": 50000,
+                        "request_date": "2025-09-20",
+                        "redemption_fee": 0.025,
+                        "compliance_officer_approval": true,
+                        "finance_officer_approval": true
+                    }
+                },
+                "output": {
+                    "action": "create",
+                    "message": "Redemption request 3045 created successfully for investor 2 from fund 4",
+                    "redemption_data": {
+                        "investor_id": "2",
+                        "fund_id": "4",
+                        "redemption_id": "3045",
+                        "amount_or_units": 50000,
+                        "redemption_value": 18557783.4,
+                        "redemption_fee": 463944.585,
+                        "net_redemption": 18093838.815,
+                        "request_date": "2025-09-20",
+                        "status": "pending",
+                        "updated_at": "2025-10-01T12:00:00"
+                    },
+                    "redemption_id": "3045",
+                    "success": true
+                }
+            },
+            {
+                "name": "add_new_audit_trail",
+                "arguments": {
+                    "action": "create",
+                    "reference_id": "3045",
+                    "reference_type": "redemption"
+                },
+                "output": {
+                    "action": "create",
+                    "audit_trail_id": "8721",
+                    "created_at": "2025-10-01T12:00:00",
+                    "field_name": null,
+                    "new_value": null,
+                    "old_value": null,
+                    "reference_id": "3045",
+                    "reference_type": "redemption"
+                }
+            }
+        ],
+        "output": ["12", "2", "4", "3045", "8721"],
+        "edges": [
+            {
+                "from": "instruction",
+                "to": "search_user_entities",
+                "connection": {
+                    "output": "entity_type, email",
+                    "input": "entity_type, filters.email"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "search_investor_entities",
+                "connection": {
+                    "output": "entity_type, investor_email",
+                    "input": "entity_type, filters.contact_email"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "search_fund_entities",
+                "connection": {
+                    "output": "entity_type, fund_name",
+                    "input": "entity_type, filters.name"
+                }
+            },
+            {
+                "from": "search_investor_entities",
+                "to": "search_portfolio_entities",
+                "connection": {
+                    "output": "results[0].investor_id",
+                    "input": "filters.investor_id"
+                }
+            },
+            {
+                "from": "search_fund_entities",
+                "to": "search_portfolio_entities",
+                "connection": {
+                    "output": "results[0].fund_id",
+                    "input": "filters.fund_id"
+                }
+            },
+            {
+                "from": "search_fund_entities",
+                "to": "search_valuation_entities",
+                "connection": {
+                    "output": "results[0].fund_id",
+                    "input": "filters.fund_id"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "search_valuation_entities",
+                "connection": {
+                    "output": "entity_type, nav_date",
+                    "input": "entity_type, filters.nav_date"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "check_approval",
+                "connection": {
+                    "output": "action, email",
+                    "input": "action, requester_email"
+                }
+            },
+            {
+                "from": "search_investor_entities",
+                "to": "handle_redemption",
+                "connection": {
+                    "output": "results[0].investor_id",
+                    "input": "redemption_data.investor_id"
+                }
+            },
+            {
+                "from": "search_fund_entities",
+                "to": "handle_redemption",
+                "connection": {
+                    "output": "results[0].fund_id",
+                    "input": "redemption_data.fund_id"
+                }
+            },
+            {
+                "from": "check_approval",
+                "to": "handle_redemption",
+                "connection": {
+                    "output": "approval_valid",
+                    "input": "redemption_data.compliance_officer_approval"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "handle_redemption",
+                "connection": {
+                    "output": "action, units, request_date, redemption_fee_percent",
+                    "input": "action, redemption_data.amount_or_units, redemption_data.request_date, redemption_data.redemption_fee"
+                }
+            },
+            {
+                "from": "handle_redemption",
+                "to": "add_new_audit_trail",
+                "connection": {
+                    "output": "redemption_id",
+                    "input": "reference_id"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "add_new_audit_trail",
+                "connection": {
+                    "output": "action, reference_type",
+                    "input": "action, reference_type"
+                }
+            }
+        ],
+        "num_edges": 14
+    }
+}
