@@ -6,15 +6,15 @@
     "temperature": 1,
     "interface_num": 2,
     "task": {
-        "user_id": "12",
-        "instruction": "You are Jennifer White (email: jennifer.white@compliance.com), a Compliance Officer. You want to process a redemption request for investor 'Little-Stevens' (littlestevens2160@gmail.com) who wants to redeem 50,000 units from the fund 'Green-Wright Growth Fund' as of September 20, 2025, with a redemption fee of 2.5% based on the latest NAV value from August 15, 2025.",
+        "user_id": "1",
+        "instruction": "You are Danielle Johnson (email: danielle.johnson@investment.com), a Compliance Officer. You want to process a redemption request for investor 'Hodges Ltd' (hodges2130@outlook.com) who wants to redeem 5000 units from the fund 'Holland and Sons Growth Fund' as of September 1, 2025, with a redemption fee of 2% based on the latest NAV value from August 4, 2025.",
         "actions": [
             {
                 "name": "search_user_entities",
                 "arguments": {
                     "entity_type": "users",
                     "filters": {
-                        "email": "jennifer.white@compliance.com"
+                        "email": "danielle.johnson@investment.com"
                     }
                 },
                 "output": {
@@ -22,15 +22,15 @@
                     "entity_type": "users",
                     "results": [
                         {
-                            "created_at": "2023-11-15T08:22:11",
-                            "email": "jennifer.white@compliance.com",
-                            "first_name": "Jennifer",
-                            "last_name": "White",
+                            "created_at": "2023-10-18T09:04:44",
+                            "email": "danielle.johnson@investment.com",
+                            "first_name": "Danielle",
+                            "last_name": "Johnson",
                             "role": "compliance_officer",
                             "status": "active",
-                            "timezone": "UTC",
-                            "updated_at": "2024-06-20T14:33:27",
-                            "user_id": "12"
+                            "timezone": "America/New_York",
+                            "updated_at": "2024-04-25T14:11:38",
+                            "user_id": "1"
                         }
                     ],
                     "success": true
@@ -41,7 +41,7 @@
                 "arguments": {
                     "entity_type": "investors",
                     "filters": {
-                        "contact_email": "littlestevens2160@gmail.com"
+                        "contact_email": "hodges2130@outlook.com"
                     }
                 },
                 "output": {
@@ -50,17 +50,17 @@
                     "results": [
                         {
                             "accreditation_status": "accredited",
-                            "address": "821 Landry Radial Suite 647, Jamesfurt, PR 63836",
-                            "contact_email": "littlestevens2160@gmail.com",
-                            "country": "United Kingdom",
-                            "created_at": "2025-06-17T07:35:12",
-                            "date_of_incorporation": "2022-12-31",
-                            "investor_id": "2",
-                            "name": "Little-Stevens",
-                            "registration_number": 10190412,
-                            "source_of_funds": "shareholder_capital",
+                            "address": "50455 Thomas Pines, Knightburgh, GA 23447",
+                            "contact_email": "hodges2130@outlook.com",
+                            "country": "United States",
+                            "created_at": "2023-01-19T13:08:39",
+                            "date_of_incorporation": "2001-04-13",
+                            "investor_id": "1",
+                            "name": "Hodges Ltd",
+                            "registration_number": 476496216,
+                            "source_of_funds": "external_investment",
                             "status": "onboarded",
-                            "tax_id": "936-95-9440"
+                            "tax_id": "996-93-7923"
                         }
                     ],
                     "success": true
@@ -71,7 +71,7 @@
                 "arguments": {
                     "entity_type": "funds",
                     "filters": {
-                        "name": "Green-Wright Growth Fund"
+                        "name": "Holland and Sons Growth Fund"
                     }
                 },
                 "output": {
@@ -79,14 +79,14 @@
                     "entity_type": "funds",
                     "results": [
                         {
-                            "created_at": "2023-04-21T09:04:46",
-                            "fund_id": "4",
-                            "fund_type": "mutual_funds",
-                            "manager_id": "43",
-                            "name": "Green-Wright Growth Fund",
-                            "size": 111576603.84,
+                            "created_at": "2023-02-09T09:22:47",
+                            "fund_id": "83",
+                            "fund_type": "sovereign_wealth_funds",
+                            "manager_id": "73",
+                            "name": "Holland and Sons Growth Fund",
+                            "size": 481483753.14,
                             "status": "open",
-                            "updated_at": "2025-04-27T18:13:30"
+                            "updated_at": "2025-01-26T05:24:14"
                         }
                     ],
                     "success": true
@@ -97,8 +97,8 @@
                 "arguments": {
                     "entity_type": "portfolio_holdings",
                     "filters": {
-                        "investor_id": "2",
-                        "fund_id": "4"
+                        "portfolio_id": "1",
+                        "fund_id": "83"
                     }
                 },
                 "output": {
@@ -106,14 +106,12 @@
                     "entity_type": "portfolio_holdings",
                     "results": [
                         {
-                            "cost_basis": 300.50,
-                            "created_at": "2025-03-10T10:15:22",
-                            "fund_id": "4",
-                            "holding_id": "87",
-                            "portfolio_id": "25",
-                            "quantity": 75000,
-                            "status": "active",
-                            "updated_at": "2025-08-01T09:30:15"
+                            "cost_basis": 177.368,
+                            "created_at": "2023-09-09T18:21:23",
+                            "fund_id": "83",
+                            "holding_id": "1",
+                            "portfolio_id": "1",
+                            "quantity": 7049.9092
                         }
                     ],
                     "success": true
@@ -124,8 +122,8 @@
                 "arguments": {
                     "entity_type": "nav_records",
                     "filters": {
-                        "fund_id": "4",
-                        "nav_date": "2025-08-15"
+                        "fund_id": "83",
+                        "nav_date": "2025-08-04"
                     }
                 },
                 "output": {
@@ -133,11 +131,11 @@
                     "entity_type": "nav_records",
                     "results": [
                         {
-                            "fund_id": "4",
-                            "nav_date": "2025-08-15",
-                            "nav_id": "1286",
-                            "nav_value": 371.155668,
-                            "updated_at": "2025-08-16T12:00:00"
+                            "fund_id": "83",
+                            "nav_date": "2025-08-04",
+                            "nav_id": "1056",
+                            "nav_value": 177.6858,
+                            "updated_at": "2025-08-10T07:22:04"
                         }
                     ],
                     "success": true
@@ -147,11 +145,11 @@
                 "name": "check_approval",
                 "arguments": {
                     "action": "redemption_processing",
-                    "requester_email": "jennifer.white@compliance.com"
+                    "requester_email": "danielle.johnson@investment.com"
                 },
                 "output": {
                     "approval_valid": true,
-                    "message": "Role 'compliance_officer' is authorized for action 'redemption_processing'"
+                    "message": "Role 'compliance_officer' is directly authorized for action 'redemption_processing'"
                 }
             },
             {
@@ -159,31 +157,31 @@
                 "arguments": {
                     "action": "create",
                     "redemption_data": {
-                        "investor_id": 2,
-                        "fund_id": 4,
-                        "amount_or_units": 50000,
-                        "request_date": "2025-09-20",
-                        "redemption_fee": 0.025,
+                        "investor_id": 1,
+                        "fund_id": 83,
+                        "amount_or_units": 5000,
+                        "request_date": "2025-09-01",
+                        "redemption_fee": 0.02,
                         "compliance_officer_approval": true,
                         "finance_officer_approval": true
                     }
                 },
                 "output": {
                     "action": "create",
-                    "message": "Redemption request 3045 created successfully for investor 2 from fund 4",
+                    "message": "Redemption request created successfully for investor 1 from fund 83",
                     "redemption_data": {
-                        "investor_id": "2",
-                        "fund_id": "4",
-                        "redemption_id": "3045",
-                        "amount_or_units": 50000,
-                        "redemption_value": 18557783.4,
-                        "redemption_fee": 463944.585,
-                        "net_redemption": 18093838.815,
-                        "request_date": "2025-09-20",
+                        "investor_id": "1",
+                        "fund_id": "83",
+                        "redemption_id": "1001",
+                        "amount_or_units": 5000,
+                        "redemption_value": 888429.0,
+                        "redemption_fee": 17768.58,
+                        "net_redemption": 870660.42,
+                        "request_date": "2025-09-01",
                         "status": "pending",
-                        "updated_at": "2025-10-01T12:00:00"
+                        "updated_at": "2025-09-01T12:00:00"
                     },
-                    "redemption_id": "3045",
+                    "redemption_id": "1001",
                     "success": true
                 }
             },
@@ -191,22 +189,22 @@
                 "name": "add_new_audit_trail",
                 "arguments": {
                     "action": "create",
-                    "reference_id": "3045",
+                    "reference_id": "1001",
                     "reference_type": "redemption"
                 },
                 "output": {
                     "action": "create",
-                    "audit_trail_id": "8721",
-                    "created_at": "2025-10-01T12:00:00",
+                    "audit_trail_id": "9001",
+                    "created_at": "2025-09-01T12:00:00",
                     "field_name": null,
                     "new_value": null,
                     "old_value": null,
-                    "reference_id": "3045",
+                    "reference_id": "1001",
                     "reference_type": "redemption"
                 }
             }
         ],
-        "output": ["12", "2", "4", "3045", "8721"],
+        "output": ["1", "1", "83", "1001", "9001"],
         "edges": [
             {
                 "from": "instruction",
@@ -237,7 +235,7 @@
                 "to": "search_portfolio_entities",
                 "connection": {
                     "output": "results[0].investor_id",
-                    "input": "filters.investor_id"
+                    "input": "filters.portfolio_id"
                 }
             },
             {
