@@ -104,7 +104,7 @@
                     "nav_data": {
                         "fund_id": 4,
                         "nav_date": "2025-08-15",
-                        "nav_value": 371.33107,
+                        "nav_value": 371.155668,
                         "finance_officer_approval": true
                     }
                 },
@@ -115,7 +115,7 @@
                         "fund_id": "4",
                         "nav_date": "2025-08-15",
                         "nav_id": "1286",
-                        "nav_value": 371.33107,
+                        "nav_value": 371.155668,
                         "updated_at": "2025-10-01T12:00:00"
                     },
                     "nav_id": "1286",
@@ -176,19 +176,11 @@
                 }
             },
             {
-                "from": "search_user_entities",
-                "to": "check_approval",
-                "connection": {
-                    "output": "results[0].email",
-                    "input": "requester_email"
-                }
-            },
-            {
                 "from": "instruction",
                 "to": "check_approval",
                 "connection": {
-                    "output": "action",
-                    "input": "action"
+                    "output": "action, email",
+                    "input": "action, requester_email"
                 }
             },
             {
@@ -240,6 +232,6 @@
                 }
             }
         ],
-        "num_edges": 12
+        "num_edges": 11
     }
 }
