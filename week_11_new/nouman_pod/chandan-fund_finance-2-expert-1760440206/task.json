@@ -1,0 +1,370 @@
+{
+    "env": "fund_finance",
+    "model_provider": "fireworks",
+    "model": "qwen3-coder-480b-a35b-instruct",
+    "num_trials": 3,
+    "temperature": 1,
+    "interface_num": 2,
+    "task": {
+        "user_id": "6",
+        "instruction": "You are Amy Robinson (email: arobinson@outlook.com), a Finance Officer. You want to process a payment for investor 'Williamson-Cervantes' (williamsoncervantes5071@outlook.com) for their subscription to the fund 'Ramirez Group Growth Fund'. The payment is for invoice amount $45,435.35, payment date October 1, 2025, using bank transfer, and the invoice should be marked as paid.",
+        "actions": [
+            {
+                "name": "search_user_entities",
+                "arguments": {
+                    "entity_type": "users",
+                    "filters": {
+                        "email": "arobinson@outlook.com"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "users",
+                    "results": [
+                        {
+                            "created_at": "2025-02-17T12:39:35",
+                            "email": "arobinson@outlook.com",
+                            "first_name": "Amy",
+                            "last_name": "Robinson",
+                            "role": "system_administrator",
+                            "status": "active",
+                            "timezone": "UTC",
+                            "updated_at": "2025-04-12T13:07:20",
+                            "user_id": "6"
+                        }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "search_investor_entities",
+                "arguments": {
+                    "entity_type": "investors",
+                    "filters": {
+                        "contact_email": "williamsoncervantes5071@outlook.com"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "investors",
+                    "results": [
+                        {
+                            "accreditation_status": "non_accredited",
+                            "address": "1341 Nathaniel Divide, Barnesberg, OK 50794",
+                            "contact_email": "williamsoncervantes5071@outlook.com",
+                            "country": "France",
+                            "created_at": "2023-11-21T11:30:35",
+                            "date_of_incorporation": "2016-07-12",
+                            "investor_id": "62",
+                            "name": "Williamson-Cervantes",
+                            "registration_number": 986527907,
+                            "source_of_funds": "royalty_or_licensing_income",
+                            "status": "onboarded",
+                            "tax_id": "927-82-8274"
+                        }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "search_fund_entities",
+                "arguments": {
+                    "entity_type": "funds",
+                    "filters": {
+                        "name": "Ramirez Group Growth Fund"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "funds",
+                    "results": [
+                        {
+                            "created_at": "2023-12-30T19:37:42",
+                            "fund_id": "35",
+                            "fund_type": "real_estate_investment_trusts",
+                            "manager_id": "83",
+                            "name": "Ramirez Group Growth Fund",
+                            "size": 174632567.09,
+                            "status": "open",
+                            "updated_at": "2024-07-08T11:59:23"
+                        }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "search_billing_entities",
+                "arguments": {
+                    "entity_type": "invoices",
+                    "filters": {
+                        "invoice_id": "1"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "invoices",
+                    "results": [
+                        {
+                            "amount": 45435.35,
+                            "commitment_id": "1885",
+                            "due_date": "2025-08-30",
+                            "invoice_date": "2025-08-05",
+                            "invoice_id": "1",
+                            "status": "issued",
+                            "updated_at": "2025-08-11T21:33:14"
+                        }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "search_investment_flow_entities",
+                "arguments": {
+                    "entity_type": "subscriptions",
+                    "filters": {
+                        "subscription_id": "1885"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "subscriptions",
+                    "results": [
+                        {
+                            "amount": 550108.36,
+                            "approval_date": null,
+                            "fund_id": "35",
+                            "investor_id": "62",
+                            "request_assigned_to": "37",
+                            "request_date": "2023-10-01",
+                            "status": "pending",
+                            "subscription_id": "1885",
+                            "updated_at": "2024-03-14T00:49:47"
+                        }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "check_approval",
+                "arguments": {
+                    "action": "payment_processing",
+                    "requester_email": "arobinson@outlook.com"
+                },
+                "output": {
+                    "approval_valid": true,
+                    "approved_by": "finance_officer"
+                }
+            },
+            {
+                "name": "handle_invoice",
+                "arguments": {
+                    "action": "update",
+                    "invoice_data": {
+                        "status": "paid",
+                        "finance_officer_approval": true
+                    },
+                    "invoice_id": "1"
+                },
+                "output": {
+                    "action": "update",
+                    "invoice_data": {
+                        "amount": 45435.35,
+                        "commitment_id": "1885",
+                        "due_date": "2025-08-30",
+                        "invoice_date": "2025-08-05",
+                        "invoice_id": "1",
+                        "status": "paid",
+                        "updated_at": "2025-10-01T12:00:00"
+                    },
+                    "invoice_id": "1",
+                    "message": "Invoice 1 updated successfully",
+                    "success": true
+                }
+            },
+            {
+                "name": "handle_payment",
+                "arguments": {
+                    "action": "create",
+                    "payment_data": {
+                        "subscription_id": "1885",
+                        "invoice_id": "1",
+                        "amount": 45435.35,
+                        "payment_method": "bank_transfer",
+                        "payment_date": "2025-10-01",
+                        "status": "completed",
+                        "finance_officer_approval": true
+                    }
+                },
+                "output": {
+                    "action": "create",
+                    "message": "Payment 2251 created successfully for invoice 1",
+                    "payment_data": {
+                        "amount": 45435.35,
+                        "created_at": "2025-10-01T12:00:00",
+                        "invoice_id": "1",
+                        "payment_date": "2025-10-01",
+                        "payment_id": "2251",
+                        "payment_method": "bank_transfer",
+                        "status": "completed",
+                        "subscription_id": "1885"
+                    },
+                    "payment_id": "2251",
+                    "success": true
+                }
+            },
+            {
+                "name": "add_new_audit_trail",
+                "arguments": {
+                    "action": "update",
+                    "field_name": "status",
+                    "new_value": "paid",
+                    "old_value": "issued",
+                    "reference_id": "1",
+                    "reference_type": "invoice"
+                },
+                "output": {
+                    "action": "update",
+                    "audit_trail_id": "3501",
+                    "created_at": "2025-10-01T00:00:00",
+                    "field_name": "status",
+                    "new_value": "paid",
+                    "old_value": "issued",
+                    "reference_id": "1",
+                    "reference_type": "invoice"
+                }
+            }
+        ],
+        "output": ["1", "1885", "2251"],
+        "edges": [
+            {
+                "from": "instruction",
+                "to": "search_user_entities",
+                "connection": {
+                    "output": "entity_type, email",
+                    "input": "entity_type, filters.email"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "search_investor_entities",
+                "connection": {
+                    "output": "entity_type, investor_email",
+                    "input": "entity_type, filters.contact_email"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "search_fund_entities",
+                "connection": {
+                    "output": "entity_type, fund_name",
+                    "input": "entity_type, filters.name"
+                }
+            },
+            {
+                "from": "search_billing_entities",
+                "to": "search_investment_flow_entities",
+                "connection": {
+                    "output": "results[0].commitment_id",
+                    "input": "filters.subscription_id"
+                }
+            },
+            {
+                "from": "search_investor_entities",
+                "to": "search_investment_flow_entities",
+                "connection": {
+                    "output": "results[0].investor_id",
+                    "input": "filters.investor_id"
+                }
+            },
+            {
+                "from": "search_fund_entities",
+                "to": "search_investment_flow_entities",
+                "connection": {
+                    "output": "results[0].fund_id",
+                    "input": "filters.fund_id"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "check_approval",
+                "connection": {
+                    "output": "action, email",
+                    "input": "action, requester_email"
+                }
+            },
+            {
+                "from": "search_billing_entities",
+                "to": "handle_invoice",
+                "connection": {
+                    "output": "results[0].invoice_id",
+                    "input": "invoice_id"
+                }
+            },
+            {
+                "from": "check_approval",
+                "to": "handle_invoice",
+                "connection": {
+                    "output": "approval_valid",
+                    "input": "invoice_data.finance_officer_approval"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "handle_invoice",
+                "connection": {
+                    "output": "invoice_status",
+                    "input": "invoice_data.status"
+                }
+            },
+            {
+                "from": "search_investment_flow_entities",
+                "to": "handle_payment",
+                "connection": {
+                    "output": "results[0].subscription_id",
+                    "input": "payment_data.subscription_id"
+                }
+            },
+            {
+                "from": "search_billing_entities",
+                "to": "handle_payment",
+                "connection": {
+                    "output": "results[0].invoice_id",
+                    "input": "payment_data.invoice_id"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "handle_payment",
+                "connection": {
+                    "output": "amount, payment_date, payment_method",
+                    "input": "payment_data.amount, payment_data.payment_date, payment_data.payment_method"
+                }
+            },
+            {
+                "from": "check_approval",
+                "to": "handle_payment",
+                "connection": {
+                    "output": "approval_valid",
+                    "input": "payment_data.finance_officer_approval"
+                }
+            },
+            {
+                "from": "handle_invoice",
+                "to": "add_new_audit_trail",
+                "connection": {
+                    "output": "invoice_id",
+                    "input": "reference_id"
+                }
+            },
+            {
+                "from": "instruction",
+                "to": "add_new_audit_trail",
+                "connection": {
+                    "output": "reference_type",
+                    "input": "reference_type"
+                }
+            }
+        ],
+        "num_edges": 16
+    }
+}
