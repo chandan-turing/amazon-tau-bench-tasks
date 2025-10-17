@@ -7,7 +7,7 @@
   "interface_num": 5,
   "task": {
     "user_id": "1",
-    "instruction": "You are Danielle Johnson, a Compliance Officer. You receive a request to onboard a new accredited investor named Pinecrest Capital Partners LLC with source of funds from shareholder capital, contact email contact@pinecrestcapital.com, and they are based in the United States at 500 Fifth Avenue, New York, NY 10110. After onboarding, create a portfolio for this investor and send an alert notification to the investor about their onboarding.",
+    "instruction": "You are Danielle Johnson (danielle.johnson@investment.com), a Compliance Officer. Onboard a new accredited investor named Pinecrest Capital Partners LLC with source of funds from shareholder capital, contact email contact@pinecrestcapital.com, based in the United States at 500 Fifth Avenue, New York, NY 10110. Create a portfolio for this investor and send an alert notification to the investor about their onboarding.",
     "actions": [
       {
         "name": "get_user_entities",
@@ -299,22 +299,6 @@
         }
       },
       {
-        "from": "get_user_entities",
-        "to": "authorization_check",
-        "connection": {
-          "output": "results[0].email",
-          "input": "requester_email"
-        }
-      },
-      {
-        "from": "instruction",
-        "to": "authorization_check",
-        "connection": {
-          "output": "action",
-          "input": "action"
-        }
-      },
-      {
         "from": "generate_investor",
         "to": "process_portfolio",
         "connection": {
@@ -390,11 +374,11 @@
         "from": "instruction",
         "to": "generate_new_audit_trail",
         "connection": {
-          "output": "action, field_name, new_value",
-          "input": "action, field_name, new_value"
+          "output": "field_name, new_value",
+          "input": "field_name, new_value"
         }
       }
     ],
-    "num_edges": 19
+    "num_edges": 17
   }
 }
