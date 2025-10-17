@@ -7,7 +7,7 @@
   "interface_num": 5,
   "task": {
     "user_id": "15",
-    "instruction": "You are Craig Ramirez, a Compliance Officer. You need to offboard an existing investor named Little-Stevens with email littlestevens2160@gmail.com due to business closure. After offboarding the investor, send an alert notification to the investor about their offboarding status.",
+    "instruction": "You are Craig Ramirez (craigramirez@investment.com), a Compliance Officer. Investor Little-Stevens (littlestevens2160@gmail.com) needs to be offboarded due to business closure. Send an alert notification to the investor about their offboarding status.",
     "actions": [
       {
         "name": "get_user_entities",
@@ -323,16 +323,8 @@
         "from": "instruction",
         "to": "process_notifications",
         "connection": {
-          "output": "action, type, class",
-          "input": "action, notification_data.type, notification_data.class"
-        }
-      },
-      {
-        "from": "get_investor_entities",
-        "to": "process_notifications",
-        "connection": {
-          "output": "results[0].contact_email",
-          "input": "notification_data.email"
+          "output": "action, email, type, class, status",
+          "input": "action, notification_data.email, notification_data.type, notification_data.class, notification_data.status"
         }
       },
       {
@@ -368,6 +360,6 @@
         }
       }
     ],
-    "num_edges": 16
+    "num_edges": 15
   }
 }
