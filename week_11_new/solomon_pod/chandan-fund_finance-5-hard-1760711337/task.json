@@ -1,0 +1,350 @@
+{
+  "env": "fund_finance",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 5,
+  "task": {
+    "user_id": "8",
+    "instruction": "You are Matthew Moore (matthew.moore@investment.com), a Finance Officer. You want to create an invoice for the pending commitment from investor Brown, Frye and Hoffman with an amount of $2,238,084.15, invoice date October 1, 2025, and due date October 31, 2025. Once the invoice is created, you want to process a payment of $2,238,084.15 for this invoice via bank transfer on October 15, 2025. You also want to send an alert notification to the investor about the invoice.",
+    "actions": [
+      {
+        "name": "get_user_entities",
+        "arguments": {
+          "entity_type": "users",
+          "filters": {
+            "email": "matthew.moore@investment.com",
+            "role": "finance_officer"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "users",
+          "results": [
+            {
+              "created_at": "2024-01-22T00:23:49",
+              "email": "matthew.moore@investment.com",
+              "first_name": "Matthew",
+              "last_name": "Moore",
+              "role": "finance_officer",
+              "status": "active",
+              "timezone": "UTC",
+              "updated_at": "2024-04-10T09:44:04",
+              "user_id": "8"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "authorization_check",
+        "arguments": {
+          "action": "invoice_management",
+          "requester_email": "matthew.moore@investment.com"
+        },
+        "output": {
+          "approval_valid": true,
+          "message": "Role 'finance_officer' is directly authorized for action 'invoice_management'"
+        }
+      },
+      {
+        "name": "get_investor_entities",
+        "arguments": {
+          "entity_type": "investors",
+          "filters": {
+            "investor_id": "10"
+          }
+        },
+        "output": {
+          "count": 1,
+          "entity_type": "investors",
+          "results": [
+            {
+              "accreditation_status": "accredited",
+              "address": "049 Bell Ports Apt. 273, West Meganstad, DE 37013",
+              "contact_email": "brown8283@hotmail.com",
+              "country": "Australia",
+              "created_at": "2025-06-22T05:52:04",
+              "date_of_incorporation": "2009-08-07",
+              "investor_id": "10",
+              "name": "Brown, Frye and Hoffman",
+              "registration_number": 131344840,
+              "source_of_funds": "other",
+              "status": "onboarded",
+              "tax_id": "936-89-9809"
+            }
+          ],
+          "success": true
+        }
+      },
+      {
+        "name": "process_invoice",
+        "arguments": {
+          "action": "create",
+          "invoice_data": {
+            "commitment_id": "62",
+            "invoice_date": "2025-10-01",
+            "due_date": "2025-10-31",
+            "amount": 2238084.15,
+            "finance_officer_approval": true
+          }
+        },
+        "output": {
+          "action": "create",
+          "invoice_data": {
+            "amount": 2238084.15,
+            "commitment_id": "62",
+            "due_date": "2025-10-31",
+            "invoice_date": "2025-10-01",
+            "invoice_id": "1751",
+            "status": "issued",
+            "updated_at": "2025-10-01T12:00:00"
+          },
+          "invoice_id": "1751",
+          "message": "Invoice 1751 created successfully for commitment 62 on 2025-10-01",
+          "success": true
+        }
+      },
+      {
+        "name": "generate_new_audit_trail",
+        "arguments": {
+          "action": "create",
+          "reference_id": "1751",
+          "reference_type": "invoice"
+        },
+        "output": {
+          "action": "create",
+          "audit_trail_id": "3501",
+          "created_at": "2025-10-01T00:00:00",
+          "field_name": null,
+          "new_value": null,
+          "old_value": null,
+          "reference_id": "1751",
+          "reference_type": "invoice"
+        }
+      },
+      {
+        "name": "process_payment",
+        "arguments": {
+          "action": "create",
+          "payment_data": {
+            "invoice_id": "1751",
+            "subscription_id": null,
+            "payment_date": "2025-10-15",
+            "amount": 2238084.15,
+            "payment_method": "bank_transfer",
+            "finance_officer_approval": true
+          }
+        },
+        "output": {
+          "action": "create",
+          "message": "Payment 2251 created successfully for invoice 1751",
+          "payment_data": {
+            "amount": 2238084.15,
+            "created_at": "2025-10-01T12:00:00",
+            "invoice_id": "1751",
+            "payment_date": "2025-10-15",
+            "payment_id": "2251",
+            "payment_method": "bank_transfer",
+            "status": "draft",
+            "subscription_id": null
+          },
+          "payment_id": "2251",
+          "success": true
+        }
+      },
+      {
+        "name": "generate_new_audit_trail",
+        "arguments": {
+          "action": "create",
+          "reference_id": "2251",
+          "reference_type": "payment"
+        },
+        "output": {
+          "action": "create",
+          "audit_trail_id": "3502",
+          "created_at": "2025-10-01T00:00:00",
+          "field_name": null,
+          "new_value": null,
+          "old_value": null,
+          "reference_id": "2251",
+          "reference_type": "payment"
+        }
+      },
+      {
+        "name": "process_notifications",
+        "arguments": {
+          "action": "create",
+          "notification_data": {
+            "email": "brown8283@hotmail.com",
+            "type": "alert",
+            "class": "invoices"
+          }
+        },
+        "output": {
+          "action": "create",
+          "message": "Notification 1501 created successfully for brown8283@hotmail.com",
+          "notification_data": {
+            "class": "invoices",
+            "created_at": "2025-10-01T12:00:00",
+            "email": "brown8283@hotmail.com",
+            "notification_id": "1501",
+            "reference_id": null,
+            "sent_at": null,
+            "status": "pending",
+            "type": "alert"
+          },
+          "notification_id": "1501",
+          "success": true
+        }
+      },
+      {
+        "name": "generate_new_audit_trail",
+        "arguments": {
+          "action": "create",
+          "reference_id": "1501",
+          "reference_type": "notification"
+        },
+        "output": {
+          "action": "create",
+          "audit_trail_id": "3503",
+          "created_at": "2025-10-01T00:00:00",
+          "field_name": null,
+          "new_value": null,
+          "old_value": null,
+          "reference_id": "1501",
+          "reference_type": "notification"
+        }
+      }
+    ],
+    "outputs": [
+      "1751",
+      "2251",
+      "3503"
+    ],
+    "edges": [
+      {
+        "from": "instruction",
+        "to": "get_user_entities",
+        "connection": {
+          "output": "entity_type, email, role",
+          "input": "entity_type, filters.email, filters.role"
+        }
+      },
+      {
+        "from": "get_user_entities",
+        "to": "authorization_check",
+        "connection": {
+          "output": "results[0].email",
+          "input": "requester_email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "authorization_check",
+        "connection": {
+          "output": "action",
+          "input": "action"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "get_investor_entities",
+        "connection": {
+          "output": "entity_type, investor_name",
+          "input": "entity_type, filters.name"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "process_invoice",
+        "connection": {
+          "output": "action, invoice_date, due_date, amount",
+          "input": "action, invoice_data.invoice_date, invoice_data.due_date, invoice_data.amount"
+        }
+      },
+      {
+        "from": "authorization_check",
+        "to": "process_invoice",
+        "connection": {
+          "output": "approval_valid",
+          "input": "invoice_data.finance_officer_approval"
+        }
+      },
+      {
+        "from": "process_invoice",
+        "to": "generate_new_audit_trail",
+        "connection": {
+          "output": "invoice_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "generate_new_audit_trail",
+        "connection": {
+          "output": "action, reference_type",
+          "input": "action, reference_type"
+        }
+      },
+      {
+        "from": "process_invoice",
+        "to": "process_payment",
+        "connection": {
+          "output": "invoice_id",
+          "input": "payment_data.invoice_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "process_payment",
+        "connection": {
+          "output": "action, payment_date, amount, payment_method, subscription_id",
+          "input": "action, payment_data.payment_date, payment_data.amount, payment_data.payment_method, payment_data.subscription_id"
+        }
+      },
+      {
+        "from": "authorization_check",
+        "to": "process_payment",
+        "connection": {
+          "output": "approval_valid",
+          "input": "payment_data.finance_officer_approval"
+        }
+      },
+      {
+        "from": "process_payment",
+        "to": "generate_new_audit_trail",
+        "connection": {
+          "output": "payment_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "get_investor_entities",
+        "to": "process_notifications",
+        "connection": {
+          "output": "results[0].contact_email",
+          "input": "notification_data.email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "process_notifications",
+        "connection": {
+          "output": "action, notification_type, notification_class",
+          "input": "action, notification_data.type, notification_data.class"
+        }
+      },
+      {
+        "from": "process_notifications",
+        "to": "generate_new_audit_trail",
+        "connection": {
+          "output": "notification_id",
+          "input": "reference_id"
+        }
+      }
+    ],
+    "num_edges": 15
+  }
+}
